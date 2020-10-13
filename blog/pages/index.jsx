@@ -4,6 +4,7 @@ import '../public/style/pages/index.css'
 import Advert from '../components/Advert'
 import Header from '../components/Header'
 import Author from '../components/Author'
+import Footer from '../components/Footer'
 import { Row, Col, List, Icon } from 'antd'
 
 const Home = () => {
@@ -46,6 +47,7 @@ const Home = () => {
           <Advert />
         </Col>
       </Row>
+      <Footer />
     </>
   )
 }
