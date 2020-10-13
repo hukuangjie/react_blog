@@ -12,3 +12,9 @@ exports.mysql = {
   enable: true,
   package: 'egg-mysql'
 }
+
+// 跨域访问
+exports.cors= {
+  enable: true,
+  package: 'egg-cors'
+}
