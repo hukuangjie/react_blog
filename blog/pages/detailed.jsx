@@ -4,6 +4,7 @@ import Header from '../components/Header'
 import Advert from '../components/Advert'
 import Author from '../components/Author'
 import Footer from '../components/Footer'
+import axios from 'axios'
 import { Row, Col, Icon, Breadcrumb, Affix } from 'antd'
 import '../public/style/pages/detailed.css'
 
@@ -100,6 +101,19 @@ const Detailed = () => {
       <Footer />
     </>
   )
+}
+
+Detailed.getInitialProps = async (context) => {
+  let id = context.query.id
+  const promise = new Promise((resolve) => {
+    axios('http://127.0.0.1:7001/default/getArticleById').then(
+      res => {
+        console.log('----->', res.data);
+        resolve(res.data.data[0])
+      }
+    )
+  })
+  return await promise
 }
 
 export default Detailed
