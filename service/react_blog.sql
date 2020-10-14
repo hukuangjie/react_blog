@@ -1,8 +1,28 @@
 ﻿# Host: localhost  (Version: 5.7.26)
-# Date: 2020-10-13 23:20:02
+# Date: 2020-10-14 18:01:10
 # Generator: MySQL-Front 5.3  (Build 4.234)
 
 /*!40101 SET NAMES utf8 */;
+
+#
+# Structure for table "admin_user"
+#
+
+DROP TABLE IF EXISTS `admin_user`;
+CREATE TABLE `admin_user` (
+  `Id` int(11) NOT NULL AUTO_INCREMENT,
+  `userName` varchar(255) DEFAULT NULL,
+  `password` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`Id`)
+) ENGINE=MyISAM AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+#
+# Data for table "admin_user"
+#
+
+/*!40000 ALTER TABLE `admin_user` DISABLE KEYS */;
+INSERT INTO `admin_user` VALUES (1,'admin','admin');
+/*!40000 ALTER TABLE `admin_user` ENABLE KEYS */;
 
 #
 # Structure for table "article"
@@ -46,5 +66,5 @@ CREATE TABLE `type` (
 #
 
 /*!40000 ALTER TABLE `type` DISABLE KEYS */;
-INSERT INTO `type` VALUES (1,'视频教程',1,'youtube'),(2,'杰哥逼逼叨',2,'message'),(3,'快乐生活',3,'smile');
+INSERT INTO `type` VALUES (1,'视频教程',1,'youtube'),(2,'杰哥逼逼',2,'message'),(3,'快乐生活',3,'smile');
 /*!40000 ALTER TABLE `type` ENABLE KEYS */;
