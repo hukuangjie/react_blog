@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import marked from 'marked'
 import '../static/css/AddArticle.css'
-import { Row, Col, Input, Select, Button, DatePicker,message } from 'antd'
+import { Row, Col, Input, Select, Button, DatePicker, message } from 'antd'
 import axios from 'axios'
 import servicePath from '../config/apiUrl'
 const { Option } = Select
@@ -110,22 +110,69 @@ function AddArticle(props) {
                 withCredentials: true
             }).then(
                 res => {
-                    setArticleId(res.data.insertId)
+                    setArticleId(res.data.insertId) //保存id到本地,再次点击就不是新增了
+                    if (res.data.isScuccess) {
+                        message.success('文章添加成功')
+                    } else {
+                        message.error('文章添加失败');
+                    }
+
+                }
+            )
+        } else {
+
+            dataProps.id = articleId
+            axios({
+                method: 'post',
+                url: servicePath.updateArticle,
+                header: { 'Access-Control-Allow-Origin': '*' },
+                data: dataProps,
+                withCredentials: true
+            }).then(
+                res => {
                     if (res.data.isScuccess) {
                         message.success('文章保存成功')
                     } else {
                         message.error('文章保存失败');
                     }
-
                 }
             )
         }
 
-
     }
     useEffect(() => {
         getTypeInfo()
+        //获得文章ID
+        let tmpId = props.match.params.id
+        if (tmpId) {
+            setArticleId(tmpId)
+            getArticleById(tmpId)
+        }
     }, [])
+
+    const getArticleById = (id) => {
+        axios(servicePath.getArticleById + id, {
+            withCredentials: true,
+            header: { 'Access-Control-Allow-Origin': '*' }
+        }).then(
+            res => {
+                // let articleInfo= res.data.data[0]
+                setArticleTitle(res.data.data[0].title)
+                setArticleContent(res.data.data[0].article_content)
+                let html = marked(res.data.data[0].article_content)
+                setMarkdownContent(html)
+                setIntroducemd(res.data.data[0].introduce)
+                let tmpInt = marked(res.data.data[0].introduce)
+                setIntroducehtml(tmpInt)
+                setShowDate(res.data.data[0].addTime)
+                setSelectType(res.data.data[0].typeId)
+
+            }
+        )
+    }
+
+
+
     return (
         <div>
             <Row gutter={5}>
@@ -160,6 +207,7 @@ function AddArticle(props) {
                             <TextArea
                                 className="markdown-content"
                                 rows={35}
+                                value={articleContent}
                                 placeholder="文章内容"
                                 onChange={changeContent}
                             ></TextArea>
@@ -185,6 +233,7 @@ function AddArticle(props) {
                             <br />
                             <TextArea
                                 rows={4}
+                                value={introducemd}
                                 placeholder="文章简介"
                                 onChange={changeIntroduce}
                             >

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Route } from "react-router-dom"
 import { Layout, Menu, Breadcrumb } from 'antd';
 import AddArticle from './AddArticle'
+import ArticleList from './ArticleList'
 import {
     DesktopOutlined,
     PieChartOutlined,
@@ -12,13 +13,22 @@ import {
 import '../static/css/AdminIndex.css'
 const { Header, Content, Footer, Sider } = Layout;
 const { SubMenu } = Menu;
-function AdminIndex() {
+function AdminIndex(props) {
 
     const [collapsed, setCollapsed] = useState(false)
     const onCollapse = collapsed => {
         setCollapsed(collapsed)
     };
 
+    const handleClickArticle = e => {
+        console.log(e.item.props)
+        if (e.key == 'addArticle') {
+            props.history.push('/index/add')
+        } else {
+            props.history.push('/index/list')
+        }
+
+    }
     return (
         <Layout style={{ minHeight: '100vh' }}>
             <Sider collapsible collapsed={collapsed} onCollapse={onCollapse}>
@@ -27,12 +37,12 @@ function AdminIndex() {
                     <Menu.Item key="1" icon={<PieChartOutlined />}>
                         工作台
                     </Menu.Item>
-                    <Menu.Item key="2" icon={<DesktopOutlined />}>
+                    <Menu.Item key="addArticle" onClick={handleClickArticle} icon={<DesktopOutlined />}>
                         添加文章
                     </Menu.Item>
-                    <SubMenu key="sub1" icon={<UserOutlined />} title="文章管理">
-                        <Menu.Item key="3">添加文章</Menu.Item>
-                        <Menu.Item key="4">文章列表</Menu.Item>
+                    <SubMenu key="sub1" onClick={handleClickArticle} icon={<UserOutlined />} title="文章管理">
+                        <Menu.Item key="addArticle">添加文章</Menu.Item>
+                        <Menu.Item key="articleList">文章列表</Menu.Item>
                     </SubMenu>
                     <Menu.Item key="9" icon={<FileOutlined />} >
                         留言管理
@@ -49,6 +59,9 @@ function AdminIndex() {
                     <div className="site-layout-background" style={{ padding: 24, minHeight: 360 }}>
                         <div>
                             <Route path="/index/" exact component={AddArticle}></Route>
+                            <Route path="/index/add/" exact component={AddArticle} />
+                            <Route path="/index/add/:id" exact component={AddArticle} />
+                            <Route path="/index/list/" component={ArticleList} />
                         </div>
                         Kuang的博客管理系统
                     </div>
