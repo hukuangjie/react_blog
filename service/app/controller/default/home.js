@@ -43,7 +43,8 @@ class HomeController extends Controller {
 
   // 的到类别名称和编号
   async getTypeInfo() {
-    const result = await this.app.mysql.select('type')
+    let sql = 'SELECT * FROM type WHERE status = 1'
+    const result = await this.app.mysql.query(sql)
     this.ctx.body = {
       data: result
     }

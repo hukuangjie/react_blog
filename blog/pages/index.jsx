@@ -64,7 +64,8 @@ const Home = (list) => {
         </Col>
         <Col className="comm-right" xs={0} sm={0} md={7} lg={5} xl={4}>
           <Author />
-          <Advert />
+          {/* 广告组件 */}
+          {/* <Advert /> */}
         </Col>
       </Row>
       <Footer />

@@ -3,4 +3,6 @@
     width: 100%;
     padding: 1rem;
     color: #888;
+    position: absolute;
+    bottom: 10px;
 }
